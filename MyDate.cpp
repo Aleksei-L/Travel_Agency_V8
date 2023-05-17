@@ -1,4 +1,5 @@
 #include "MyDate.h"
+#include "MyString.h"
 
 int MyDate::daytab[2][13] = {
 	{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
@@ -279,6 +280,14 @@ int	MyDate::equal(const MyDate& d) const {
 	return day == d.day && month == d.month && year == d.year;
 }
 
+// Проверка дат на равенство для полиморфизма
+int MyDate::equal(const OBJ& t) const {
+	if (t.toMyString() == MyString("MyDate"))
+		return equal((const MyDate&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
+}
+
 // Сравнение двух дат
 int	MyDate::cmp(const MyDate& d) const {
 	if (year != d.year)
@@ -287,6 +296,14 @@ int	MyDate::cmp(const MyDate& d) const {
 		return month - d.month;
 	else
 		return day - d.day;
+}
+
+// Сравнение двух дат для полиморфизма
+int MyDate::cmp(const OBJ& t) const {
+	if (t.toMyString() == MyString("MyDate"))
+		return cmp((const MyDate&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
 }
 
 // Ввод даты
@@ -308,6 +325,11 @@ int MyDate::input(std::istream& cin) {
 void MyDate::output(std::ostream& cout) const {
 	const char* s = MonthName[month], * ss = getDayOfWeek();
 	cout << day << " (" << ss << ") " << s << " (" << month << ") " << year;
+}
+
+// Определение класса
+MyString MyDate::toMyString() const {
+	return MyString("MyDate");
 }
 
 // Перегрузка операторов

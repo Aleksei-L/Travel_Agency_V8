@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <iostream>
+#include "IO.h"
 
 typedef FILE* File;
 
-class MyDate {
+class MyDate : public IO {
 private:
 	int day; // День
 	int month; // Месяц
@@ -46,6 +46,9 @@ public:
 	int	cmp(const MyDate& t) const;
 	int	input(std::istream& cin = std::cin);
 	void output(std::ostream& cout = std::cout) const;
+	MyString toMyString() const;
+	int equal(const OBJ& t) const;
+	int cmp(const OBJ& t) const;
 	// Перегрузка операторов
 	MyDate& operator = (const MyDate str);
 	operator const char* ();

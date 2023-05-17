@@ -127,19 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="IO.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyDate.cpp" />
     <ClCompile Include="MyString.cpp" />
-    <ClCompile Include="Table.cpp" />
-    <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="Obj.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h" />
+    <ClInclude Include="IO.h" />
     <ClInclude Include="MyDate.h" />
     <ClInclude Include="MyString.h" />
-    <ClInclude Include="Table.h" />
-    <ClInclude Include="Vector.h" />
+    <ClInclude Include="Obj.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,8 @@
 #pragma once
-#include <iostream>
 #include <string.h>
+#include "IO.h"
 
-class MyString {
+class MyString : public IO {
 private:
 	char* s; // Указатель на строку
 	char* cur; // Указатель на первый свободный элемент
@@ -17,8 +17,13 @@ public:
 	int length() const;
 	MyString* copy();
 	int cmp(const MyString& t) const;
-	int input(std::istream& cin);
-	void output(std::ostream& cout) const;
+	int cmp(const OBJ& t) const;
+	int equal(const MyString& t) const;
+	int equal(const OBJ& t) const;
+	int input(std::istream& cin = std::cin);
+	void output(std::ostream& cout = std::cout) const;
+	MyString toMyString() const;
+	void dispose();
 	// Индивидуальные функции
 	void resize(int newsize);
 	int find(int first, int last, const MyString& item);

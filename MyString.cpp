@@ -30,9 +30,14 @@ MyString::MyString(const char* t) {
 	len = MAX_SIZE + strlen(t);
 }
 
+// Освобождение памяти из-под строки
+void MyString::dispose() {
+	delete[] s;
+}
+
 // Деструктор
 MyString::~MyString() {
-	delete[] s;
+	dispose();
 }
 
 // Возвращает длину массива выделенного под строку
@@ -53,6 +58,27 @@ MyString* MyString::copy() {
 // Сравнение двух строк
 int MyString::cmp(const MyString& t) const {
 	return strcmp(s, t.s);
+}
+
+// Сравнение двух строк для полиморфизма
+int MyString::cmp(const OBJ& t) const {
+	if (t.toMyString().cmp("MyString") == 0)
+		return cmp((const MyString&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
+}
+
+// Проверка строк на равенство
+int MyString::equal(const MyString& t) const {
+	return strcmp(s, t.s) == 0;
+}
+
+// Проверка строк на равенство для полиморфизма
+int MyString::equal(const OBJ& t) const {
+	if (t.toMyString() == MyString("MyString"))
+		return equal((const MyString&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
 }
 
 // Ввод строки
@@ -76,9 +102,14 @@ int MyString::input(std::istream& cin) {
 }
 
 // Вывод строки на экран
-void MyString::output(std::ostream& cout)const {
+void MyString::output(std::ostream& cout) const {
 	for (char* i = s; i < cur; i++)
 		cout << *i;
+}
+
+// Определение класса
+MyString MyString::toMyString() const {
+	return MyString("MyString");
 }
 
 // Индивидуальные функции
