@@ -2,23 +2,18 @@
 #include <algorithm>
 
 // Конструктор по умолчанию
-Table::Table() : v(10), buf(0) {
-	current = v.begin();
+Table::Table() : buf(0) {
+	current = begin();
 }
 
 // Конструктор с заданными значениями полей
-Table::Table(int s, T b) : v(s), buf(b) {
-	current = v.begin();
+Table::Table(int s, T b) : buf(b) {
+	current = begin();
 }
 
 // Деструктор таблицы
 Table::~Table() {
 	clear();
-}
-
-// Возвращает указатель на первый элемент таблицы
-T* Table::begin() const {
-	return v.begin();
 }
 
 // Возвращает указатель на первый свободный элемент таблицы
@@ -28,12 +23,7 @@ T* Table::end() const {
 
 // Возвращает размер заполненной части таблицы
 int Table::length() {
-	return current - v.begin();
-}
-
-// Возвращает общий размер таблицы
-int Table::getSize() {
-	return v.getSize();
+	return current - begin();
 }
 
 // Удаление одного элемента в таблице (по индексу)
@@ -57,13 +47,13 @@ void Table::clear() {
 // Изменение размера таблицы на plusSize элементов
 void Table::resize(int plusSize) {
 	int temp = length();
-	v.resize(plusSize);
-	current = &v[v.getSize() - temp];
+	resize(plusSize);
+	current = &item(getSize() - temp);
 }
 
 // Вставка нового клиента в таблицу
 T* Table::insert(const T& newClient) {
-	if (length() < v.getSize())
+	if (length() < getSize())
 		*current++ = newClient->copy();
 	return current;
 }
@@ -78,7 +68,7 @@ int Table::input(std::istream& cin) {
 		resize(newSize);
 	}
 	for (int i = length(); i < getSize(); i++) {
-		if (!buf->input(std::cin))
+		if (!((IO*)buf)->input(cin))
 			break;
 		insert(buf);
 	}
@@ -91,7 +81,7 @@ void Table::output(std::ostream& cout) const {
 	int counter = 1;
 	for (T* i = begin(); i != end(); i++) {
 		std::cout << "Client #" << counter++ << std::endl;
-		(*i)->output(cout);
+		((IO*)*i)->output(cout);
 		flag = true;
 		std::cout << std::endl;
 	}
@@ -103,8 +93,8 @@ void Table::output(std::ostream& cout) const {
 void Table::sort() {
 	for (int i = 0; i < getSize(); i++) {
 		for (int j = i + 1; j < getSize(); j++) {
-			if (*v[i] > *v[j])
-				std::swap(v[i], v[j]);
+			if (item(i) > item(j))
+				std::swap(item(i), item(j));
 		}
 	}
 }

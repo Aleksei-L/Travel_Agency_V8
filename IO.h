@@ -1,7 +1,7 @@
 #pragma once
 #include "Obj.h"
 
-class IO :public OBJ {
+class IO : public OBJ {
 public:
 	virtual int input(std::istream& cin = std::cin) = 0;
 	virtual void output(std::ostream& cout = std::cout) const = 0;

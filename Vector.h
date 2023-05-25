@@ -1,5 +1,6 @@
 #pragma once
 #include "Client.h"
+#include "Obj.h"
 
 class Vector {
 private:

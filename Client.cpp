@@ -1,13 +1,13 @@
 #include "Client.h"
 #include <string.h>
 
-// Конструктор клиента по умолчанию
+// Конструктор по умолчанию
 Client::Client() {
 	phone = 0;
 	age = 0.0;
 }
 
-// Конструктор клиента с заданными параметрами полей
+// Конструктор с заданными параметрами полей
 Client::Client(const char* n, const char* c, int p, int a, int d, int m, int y) :name(n), city(c), phone(p), age(a), birth(d, m, y) {
 }
 
@@ -15,11 +15,11 @@ Client::Client(const char* n, const char* c, int p, int a, int d, int m, int y) 
 Client::Client(const Client& t) : name(t.name), city(t.city), phone(t.phone), age(t.age), birth(t.birth) {
 }
 
-// Освобождение памяти из-под клиента
+// Освобождение памяти
 void Client::dispose() {
 }
 
-// Деструктор клиента
+// Деструктор
 Client::~Client() {
 	dispose();
 }
@@ -56,30 +56,52 @@ void Client::output(std::ostream& cout) const {
 	cout << "Birth day: " << birth << std::endl;
 }
 
-// Разница между клиентами
-int Client::cmp(const Client& b) const {
+// Сравнение
+int Client::cmp(const Client& t) const {
 	int cond;
-	if ((cond = name.cmp(b.name)) != 0)
+	if ((cond = name.cmp(t.name)) != 0)
 		return cond;
-	else if ((cond = city.cmp(b.city)) != 0)
+	else if ((cond = city.cmp(t.city)) != 0)
 		return cond;
-	else if ((cond = phone - b.phone) != 0)
+	else if ((cond = phone - t.phone) != 0)
 		return cond;
-	else if ((cond = age - b.age) != 0)
+	else if ((cond = age - t.age) != 0)
 		return cond;
-	else if ((cond = birth.cmp(b.birth)))
+	else if ((cond = birth.cmp(t.birth)))
 		return cond;
 	return 0;
 }
 
-// Проверка клиентов на равенство
+// Сравнение
+int Client::cmp(const OBJ& t) const {
+	if (t.toMyString() == MyString("Client"))
+		return cmp((const Client&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
+}
+
+// Проверка на равенство
 int Client::equal(const Client& t) const {
 	return !name.cmp(t.name) && !city.cmp(t.city) && (phone == t.phone) && (age == t.age) && !birth.cmp(t.birth);
 }
 
-// Создание копии объекта в динамической памяти
+// Проверка на равенство
+int Client::equal(const OBJ& t) const {
+	if (t.toMyString() == MyString("Book"))
+		return equal((const Client&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
+
+}
+
+// Создание копии в динамической памяти
 Client* Client::copy() {
 	return new Client(*this);
+}
+
+// Определение класса
+MyString Client::toMyString() const {
+	return MyString("Client");
 }
 
 // Перегрузка операторов
