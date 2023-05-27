@@ -1,7 +1,7 @@
 #include "Trip.h"
 
 // Конструктор по умолчанию
-Trip::Trip() {
+Trip::Trip() : days(0), price(0) {
 	client = (Client*)0;
 	tour = (Tour*)0;
 }
@@ -20,52 +20,12 @@ Trip::Trip(const Trip& t) : about(t.about), days(t.days), price(t.price), date(t
 		tour = t.tour->copy();
 }
 
-// Освобождение памяти
-void Trip::dispose() {
-	delete client;
-	delete tour;
-}
-
 // Деструктор
 Trip::~Trip() {
 	dispose();
 }
 
-// Создание копии в динамической памяти
-Trip* Trip::copy() {
-	return new Trip(*this);
-}
-
-// Проверка на равенство
-int Trip::equal(const Trip& t) const {
-	int a = 1;
-	a = a && client->equal(*t.client);
-	a = a && tour->equal(*t.tour);
-	a = a && ((t.about.length() != 0) ? about.equal(t.about) : 1);
-	a = a && (days == t.days);
-	a = a && (price == t.price);
-	a = a && ((t.date.getDay() != 0 && t.date.getMonth() != 0 && t.date.getYear() != 0) ? date.equal(t.date) : 1);
-	return a;
-}
-
-// Сравнение
-int Trip::cmp(const Trip& t) const {
-	int cond;
-
-	if (t.about.length() != 0 && (cond = about.cmp(t.about)))
-		return cond;
-	else if ((cond = (days == t.days)))
-		return cond;
-	else if ((cond = (price == t.price)))
-		return cond;
-	else if ((cond = date.cmp(t.date)))
-		return cond;
-	else if ((cond = client->cmp(*t.client)))
-		return cond;
-	return tour->cmp(*t.tour);
-}
-
-// Ввод данных
+// Ввод с клавиатуры
 int Trip::input(std::istream& cin) {
 	std::cout << "Enter info about tour: ";
 	cin >> about;
@@ -94,7 +54,7 @@ int Trip::input(std::istream& cin) {
 	return 1;
 }
 
-// Вывод данных
+// Вывод на экран
 void Trip::output(std::ostream& cout) const {
 	client->output(cout);
 	tour->output(cout);
@@ -104,23 +64,84 @@ void Trip::output(std::ostream& cout) const {
 	cout << "Date: " << date << std::endl;
 }
 
-// Определение класса
-MyString Trip::toMyString()const {
-	return MyString("Trip");
+// Ввод из файла
+int Trip::input(std::ifstream& cin) {
+	client->input(cin);
+	tour->input(cin);
+	cin >> about;
+	cin >> days;
+	cin >> price;
+	cin >> date;
+	return 1;
 }
 
-// Проверка на равенство
-int Trip::equal(const OBJ& o) const {
-	if (o.toMyString() == MyString("Trip"))
-		return equal((const Trip&)o);
-	std::cout << "Type error" << std::endl;
-	exit(1);
+// Вывод в файл
+void Trip::output(std::ofstream& cout) const {
+	client->output(cout);
+	tour->output(cout);
+	cout << about << std::endl;
+	cout << days << std::endl;
+	cout << price << std::endl;
+	cout << date << std::endl;
 }
 
 // Сравнение
-int Trip::cmp(const OBJ& o) const {
-	if (o.toMyString() == MyString("Trip"))
-		return cmp((const Trip&)o);
+int Trip::cmp(const Trip& t) const {
+	int cond;
+
+	if (t.about.length() != 0 && (cond = about.cmp(t.about)))
+		return cond;
+	else if ((cond = (days == t.days)))
+		return cond;
+	else if ((cond = (price == t.price)))
+		return cond;
+	else if ((cond = date.cmp(t.date)))
+		return cond;
+	else if ((cond = client->cmp(*t.client)))
+		return cond;
+	return tour->cmp(*t.tour);
+}
+
+// Сравнение
+int Trip::cmp(const OBJ& t) const {
+	if (t.toMyString() == MyString("Trip"))
+		return cmp((const Trip&)t);
 	std::cout << "Type error" << std::endl;
 	exit(1);
+}
+
+// Проверка на равенство
+int Trip::equal(const Trip& t) const {
+	int a = 1;
+	a = a && client->equal(*t.client);
+	a = a && tour->equal(*t.tour);
+	a = a && ((t.about.length() != 0) ? about.equal(t.about) : 1);
+	a = a && (days == t.days);
+	a = a && (price == t.price);
+	a = a && ((t.date.getDay() != 0 && t.date.getMonth() != 0 && t.date.getYear() != 0) ? date.equal(t.date) : 1);
+	return a;
+}
+
+// Проверка на равенство
+int Trip::equal(const OBJ& t) const {
+	if (t.toMyString() == MyString("Trip"))
+		return equal((const Trip&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
+}
+
+// Создание копии в динамической памяти
+Trip* Trip::copy() {
+	return new Trip(*this);
+}
+
+// Определение класса
+MyString Trip::toMyString() const {
+	return MyString("Trip");
+}
+
+// Освобождение памяти
+void Trip::dispose() {
+	delete client;
+	delete tour;
 }

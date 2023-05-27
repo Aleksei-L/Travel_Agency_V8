@@ -16,9 +16,6 @@ Tour::Tour(const Tour& t) : name(t.name), country(t.country), count(t.count) {
 // Деструктор
 Tour::~Tour() {}
 
-// Освобождение памяти
-void Tour::dispose() {}
-
 // Определение класса
 MyString Tour::toMyString() const {
 	return MyString("Tour");
@@ -40,7 +37,7 @@ int Tour::cmp(const OBJ& t) const {
 	exit(1);
 }
 
-// Ввод информации
+// Ввод с клавиатуры
 int Tour::input(std::istream& cin) {
 	std::cout << "Enter tour name: ";
 	cin >> name;
@@ -57,11 +54,29 @@ int Tour::input(std::istream& cin) {
 	return 1;
 }
 
-// Вывод информации
+// Вывод на экран
 void Tour::output(std::ostream& cout) const {
-	cout << "Client name: " << name << std::endl;
+	cout << "Tour name: " << name << std::endl;
 	cout << "Country name: " << country << std::endl;
 	cout << "City's count: " << count << std::endl;
+}
+
+// Ввод из файла
+int Tour::input(std::ifstream& cin) {
+	cin >> name;
+	bool b = cin.eof();
+	if (b)
+		return 0;
+	cin >> country;
+	cin >> count;
+	return 1;
+}
+
+// Вывод в файл
+void Tour::output(std::ofstream& cout) const {
+	cout << name << std::endl;
+	cout << country << std::endl;
+	cout << count << std::endl;
 }
 
 // Сравнение
@@ -85,3 +100,6 @@ int Tour::equal(const Tour& t) const {
 Tour* Tour::copy() {
 	return new Tour(*this);
 }
+
+// Освобождение памяти
+void Tour::dispose() {}

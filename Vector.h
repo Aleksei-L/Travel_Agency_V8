@@ -1,6 +1,5 @@
 #pragma once
 #include "Client.h"
-#include "Obj.h"
 
 class Vector {
 private:
@@ -8,7 +7,7 @@ private:
 	int size; // Размер вектора
 public:
 	Vector();
-	Vector(int sz);
+	Vector(int);
 	Vector(const Vector&);
 	~Vector();
 	T* begin() const;
@@ -16,6 +15,5 @@ public:
 	int getSize();
 	T& item(int);
 	void resize(int);
-	// Перегрузка операторов
 	T& operator [] (int);
 };

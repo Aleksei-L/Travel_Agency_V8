@@ -1,5 +1,4 @@
 #pragma once
-#include "IO.h"
 #include "MyString.h"
 #include "MyDate.h"
 
@@ -14,17 +13,18 @@ public:
 	Client();
 	Client(const char*, const char*, int, int, int, int, int);
 	Client(const Client&);
-	void dispose();
 	~Client();
 	int	input(std::istream& cin = std::cin);
 	void output(std::ostream& cout = std::cout) const;
+	int input(std::ifstream&);
+	void output(std::ofstream&) const;
 	int cmp(const Client&) const;
 	int cmp(const OBJ&) const;
 	int equal(const Client&) const;
 	int equal(const OBJ&) const;
 	Client* copy();
 	MyString toMyString() const;
-	// Перегрузка операторов
+	void dispose();
 	friend int operator == (const Client&, const Client&);
 	friend int operator != (const Client&, const Client&);
 	friend int operator < (const Client&, const Client&);

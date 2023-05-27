@@ -1,5 +1,4 @@
 #include "Client.h"
-#include <string.h>
 
 // Конструктор по умолчанию
 Client::Client() {
@@ -15,16 +14,12 @@ Client::Client(const char* n, const char* c, int p, int a, int d, int m, int y) 
 Client::Client(const Client& t) : name(t.name), city(t.city), phone(t.phone), age(t.age), birth(t.birth) {
 }
 
-// Освобождение памяти
-void Client::dispose() {
-}
-
 // Деструктор
 Client::~Client() {
 	dispose();
 }
 
-// Ввод информации про клиента
+// Ввод с клавиатуры
 int Client::input(std::istream& cin) {
 	std::cout << "Enter client name: ";
 	cin >> name;
@@ -47,13 +42,35 @@ int Client::input(std::istream& cin) {
 	return 1;
 }
 
-// Вывод информации про клиента
+// Вывод на экран
 void Client::output(std::ostream& cout) const {
 	cout << "Client name: " << name << std::endl;
 	cout << "City: " << city << std::endl;
 	cout << "Phone: " << phone << std::endl;
 	cout << "Age: " << age << std::endl;
 	cout << "Birth day: " << birth << std::endl;
+}
+
+// Ввод из файла
+int Client::input(std::ifstream& cin) {
+	cin >> name;
+	bool b = cin.eof();
+	if (b)
+		return 0;
+	cin >> city;
+	cin >> phone;
+	cin >> age;
+	cin >> birth;
+	return 1;
+}
+
+// Вывод в файл
+void Client::output(std::ofstream& cout) const {
+	cout << name << std::endl;
+	cout << city << std::endl;
+	cout << phone << std::endl;
+	cout << age << std::endl;
+	cout << birth << std::endl;
 }
 
 // Сравнение
@@ -104,7 +121,9 @@ MyString Client::toMyString() const {
 	return MyString("Client");
 }
 
-// Перегрузка операторов
+// Освобождение памяти
+void Client::dispose() {
+}
 
 // Оператор проверки на равенство
 int operator == (const Client& a, const Client& b) {

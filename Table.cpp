@@ -2,18 +2,94 @@
 #include <algorithm>
 
 // Конструктор по умолчанию
-Table::Table() : buf(0) {
+Table::Table() : Vector(), buf(0) {
 	current = begin();
 }
 
 // Конструктор с заданными значениями полей
-Table::Table(int s, T b) : buf(b) {
+Table::Table(int s, T b) : Vector(s), buf(b) {
 	current = begin();
 }
 
 // Деструктор таблицы
 Table::~Table() {
 	clear();
+}
+
+// Ввод таблицы
+int Table::input(std::istream& cin) {
+	int count = 0;
+	if (length() == getSize()) {
+		std::cout << "Size over, enter new size: ";
+		int newSize;
+		cin >> newSize;
+		//resize(newSize);
+	}
+	for (int i = length(); i < getSize(); i++) {
+		if (!((IO*)buf)->input(cin))
+			break;
+		insert(buf);
+	}
+	return count;
+}
+
+// Вывод таблицы
+void Table::output(std::ostream& cout) const {
+	bool flag = false;
+	int counter = 1;
+	for (T* i = begin(); i != end(); i++) {
+		cout << "Client #" << counter++ << std::endl;
+		((IO*)*i)->output(cout);
+		flag = true;
+		cout << std::endl;
+	}
+	if (!flag)
+		cout << "There is no to output!" << std::endl;
+}
+
+// Ввод из файла
+int Table::input(std::ifstream& cin) {
+	int count = 0;
+	if (length() == getSize()) {
+		std::cout << "Size over, enter new size: ";
+		int newSize;
+		cin >> newSize;
+		resize(newSize);
+	}
+	for (int i = length(); i < getSize(); i++) {
+		if (!((IO*)buf)->input(cin))
+			break;
+		insert(buf);
+	}
+	return count;
+}
+
+// Вывод в файл
+void Table::output(std::ofstream& cout) const {
+	bool flag = false;
+	int counter = 1;
+	for (T* i = begin(); i != end(); i++) {
+		cout << "Client #" << counter++ << std::endl;
+		((IO*)*i)->output(cout);
+		flag = true;
+		cout << std::endl;
+	}
+	if (!flag)
+		cout << "There is no to output!" << std::endl;
+}
+
+// Вставка нового элемента в таблицу
+T* Table::insert(const T& newClient) {
+	if (length() < getSize())
+		*current++ = newClient->copy();
+	return current;
+}
+
+// Изменение размера таблицы на plusSize элементов
+void Table::resize(int plusSize) {
+	int temp = length();
+	resize(plusSize);
+	current = &item(getSize() - temp);
 }
 
 // Возвращает указатель на первый свободный элемент таблицы
@@ -37,56 +113,9 @@ T* Table::erase(T* pos) {
 
 // Удаление всех элементов в таблице
 void Table::clear() {
-	for (T* i = begin(); i < current; i++) {
-		(*i)->dispose();
+	for (T* i = begin(); i < current; i++)
 		delete (*i);
-	}
 	current = begin();
-}
-
-// Изменение размера таблицы на plusSize элементов
-void Table::resize(int plusSize) {
-	int temp = length();
-	resize(plusSize);
-	current = &item(getSize() - temp);
-}
-
-// Вставка нового клиента в таблицу
-T* Table::insert(const T& newClient) {
-	if (length() < getSize())
-		*current++ = newClient->copy();
-	return current;
-}
-
-// Ввод таблицы
-int Table::input(std::istream& cin) {
-	int count = 0;
-	if (length() == getSize()) {
-		std::cout << "Size over, enter new size: ";
-		int newSize;
-		std::cin >> newSize;
-		resize(newSize);
-	}
-	for (int i = length(); i < getSize(); i++) {
-		if (!((IO*)buf)->input(cin))
-			break;
-		insert(buf);
-	}
-	return count;
-}
-
-// Вывод таблицы
-void Table::output(std::ostream& cout) const {
-	bool flag = false;
-	int counter = 1;
-	for (T* i = begin(); i != end(); i++) {
-		std::cout << "Client #" << counter++ << std::endl;
-		((IO*)*i)->output(cout);
-		flag = true;
-		std::cout << std::endl;
-	}
-	if (!flag)
-		std::cout << "There is no to output!" << std::endl;
 }
 
 // Сортировка таблицы
@@ -138,7 +167,40 @@ int Table::remove(const T& badClient) {
 	return n;
 }
 
-// Перегрузка операторов
+// Вставка элемента в таблицу
+int Table::append(const char* filename) {
+	std::ifstream fin(filename);
+	if (!fin.is_open()) {
+		std::cout << "File couldn't be open" << std::endl;
+		return 0;
+	}
+	std::cout << "Input Table from file " << filename << std::endl;
+	this->input(fin);
+	fin.close();
+	std::cout << "Append Table from cin" << std::endl;
+	std::cin >> *this;
+	std::cin.clear();
+	save(filename);
+	std::cout << *this;
+	return 1;
+}
+
+// Сохранение в файл
+int Table::save(const char* filename) {
+	std::cout << "Save table to file " << filename << " 1 - YES; 0 - NO" << std::endl;
+	int n = 0;
+	std::cin >> n;
+	if (n) {
+		std::ofstream fout(filename);
+		if (!fout.is_open()) {
+			std::cout << "File couldn't be open" << std::endl;
+			return 0;
+		}
+		this->output(fout);
+		fout.close();
+	}
+	return 1;
+}
 
 // Оператор вывода
 std::ostream& operator << (std::ostream& os, const Table& r) {

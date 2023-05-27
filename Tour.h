@@ -1,5 +1,4 @@
 #pragma once
-#include "IO.h"
 #include "MyString.h"
 
 class Tour : public IO {
@@ -12,13 +11,15 @@ public:
 	Tour(const char*, const char*, int);
 	Tour(const Tour&);
 	~Tour();
-	void dispose();
 	int input(std::istream& cin = std::cin);
-	void output(std::ostream& os = std::cout) const;
-	int	equal(const Tour&) const;
+	void output(std::ostream& cout = std::cout) const;
+	int input(std::ifstream&);
+	void output(std::ofstream&) const;
 	int cmp(const Tour&) const;
-	MyString toMyString() const;
-	int equal(const OBJ&) const;
 	int cmp(const OBJ&) const;
+	int	equal(const Tour&) const;
+	int equal(const OBJ&) const;
 	Tour* copy();
+	MyString toMyString() const;
+	void dispose();
 };

@@ -1,5 +1,4 @@
 #pragma once
-#include "IO.h"
 #include "Client.h"
 #include "Tour.h"
 
@@ -16,13 +15,15 @@ public:
 	Trip(Client*, Tour*, const char*, int, double, int, int, int);
 	Trip(const Trip&);
 	~Trip();
-	Trip* copy();
-	void dispose();
-	int	equal(const Trip&) const;
-	int	cmp(const Trip&) const;
 	int	input(std::istream& cin = std::cin);
 	void output(std::ostream& cout = std::cout) const;
-	int equal(const OBJ&)const;
+	int input(std::ifstream&);
+	void output(std::ofstream&) const;
+	int	cmp(const Trip&) const;
 	int cmp(const OBJ&)const;
+	int	equal(const Trip&) const;
+	int equal(const OBJ&)const;
+	Trip* copy();
 	MyString toMyString() const;
+	void dispose();
 };

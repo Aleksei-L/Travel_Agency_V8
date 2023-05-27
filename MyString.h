@@ -1,5 +1,4 @@
 #pragma once
-#include <string.h>
 #include "IO.h"
 
 class MyString : public IO {
@@ -10,37 +9,25 @@ private:
 	int realSize() const;
 public:
 	MyString();
-	MyString(const MyString& t);
-	MyString(const char* t);
+	MyString(const char*);
+	MyString(const MyString&);
 	~MyString();
+	int input(std::istream& cin = std::cin);
+	void output(std::ostream& cout = std::cout) const;
+	int input(std::ifstream&);
+	void output(std::ofstream&) const;
+	int cmp(const MyString&) const;
+	int cmp(const OBJ&) const;
+	int equal(const MyString&) const;
+	int equal(const OBJ&) const;
 	int length();
 	int length() const;
 	MyString* copy();
-	int cmp(const MyString& t) const;
-	int cmp(const OBJ& t) const;
-	int equal(const MyString& t) const;
-	int equal(const OBJ& t) const;
-	int input(std::istream& cin = std::cin);
-	void output(std::ostream& cout = std::cout) const;
 	MyString toMyString() const;
 	void dispose();
-	// Индивидуальные функции
-	void resize(int newsize);
-	int find(int first, int last, const MyString& item);
-	MyString substring(int pos, int count);
-	int erase(int pos, int count);
-	int insert(int pos, const MyString& item);
-	int remove(int first, int last, const MyString& item);
-	int replace(int first, int last, const MyString& oldString, const MyString& newString);
-	MyString* split(int& count, char c = ' ');
-	MyString* split(const MyString& splits, int& count);
-	static MyString concate(const MyString& s1, const MyString& s2);
-	static MyString concate(MyString* arr, int count);
-	static MyString join(MyString* arr, int count, char c = ' ');
-	// Перегрузка операторов
 	MyString& operator = (const MyString&);
 	operator char* ();
-	char& operator [] (int i);
+	char& operator [] (int);
 	MyString& operator += (const MyString&);
 	friend int operator == (const MyString&, const MyString&);
 	friend int operator != (const MyString&, const MyString&);
@@ -49,6 +36,4 @@ public:
 	friend int operator > (const MyString&, const MyString&);
 	friend int operator >= (const MyString&, const MyString&);
 	friend MyString operator + (const MyString&, const MyString&);
-	friend std::ostream& operator << (std::ostream&, const MyString&);
-	friend std::istream& operator >> (std::istream&, MyString&);
 };

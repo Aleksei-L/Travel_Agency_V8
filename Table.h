@@ -1,28 +1,30 @@
 #pragma once
 #include "Vector.h"
-#include "IO.h"
 
 class Table : public Vector {
 private:
-	T buf; // Буфер для промежуточного хранения клиента
+	T buf; // Буфер для промежуточного хранения
 	T* current; // Указатель на первый свободный в таблице
 public:
 	Table();
-	Table(int s, T b);
+	Table(int, T);
 	~Table();
-	T* end() const;
-	int length();
-	T* erase(T* pos);
-	void clear();
-	void resize(int plusSize);
-	T* insert(const T& newClient);
 	int input(std::istream& cin = std::cin);
 	void output(std::ostream& cout = std::cout) const;
+	int input(std::ifstream&);
+	void output(std::ofstream&) const;
+	T* insert(const T&);
+	void resize(int);
+	T* end() const;
+	int length();
+	T* erase(T*);
+	void clear();
 	void sort();
-	int search(const T& tempClient);
-	int replace(const T& oldClient, const T& newClient);
-	int remove(const T& badClient);
-	// Перегрузка операторов
-	friend std::ostream& operator << (std::ostream& os, const Table& r);
-	friend std::istream& operator >> (std::istream& is, Table& r);
+	int search(const T&);
+	int replace(const T&, const T&);
+	int remove(const T&);
+	int append(const char*);
+	int save(const char*);
+	friend std::ostream& operator << (std::ostream&, const Table&);
+	friend std::istream& operator >> (std::istream&, Table&);
 };

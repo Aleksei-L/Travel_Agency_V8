@@ -1,7 +1,4 @@
 #pragma once
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "IO.h"
 
 typedef FILE* File;
@@ -16,10 +13,18 @@ private:
 	static const char* DayNames[8]; // Названия дней недели
 public:
 	MyDate();
-	MyDate(int d, int m, int y);
-	MyDate(char* s);
+	MyDate(int, int, int);
+	MyDate(char*);
 	MyDate(const MyDate&);
 	~MyDate();
+	int	input(std::istream& cin = std::cin);
+	void output(std::ostream& cout = std::cout) const;
+	int input(std::ifstream&);
+	void output(std::ofstream&) const;
+	int	cmp(const MyDate&) const;
+	int cmp(const OBJ&) const;
+	int	equal(const MyDate&) const;
+	int equal(const OBJ&) const;
 	int getDay();
 	int getDay() const;
 	int getMonth();
@@ -27,44 +32,35 @@ public:
 	int getYear();
 	int getYear() const;
 	char* getDayOfWeek() const;
-	void setDay(int d);
-	void setMonth(int m);
-	void setYear(int y);
-	void addDays(long d);
-	void addMonth(long m);
-	void addYears(long y);
+	void setDay(int);
+	void setMonth(int);
+	void setYear(int);
+	void addDays(long);
+	void addMonth(long);
+	void addYears(long);
 	int validate();
-	static int isYearLeap(int y);
+	static int isYearLeap(int);
 	unsigned long toLong() const;
 	char* toChar();
-	static int dayOfYear(int y, int m, int d);
-	static void dayOfMonth(int d, int y, int* m, int* dd);
+	static int dayOfYear(int, int, int);
+	static void dayOfMonth(int, int, int*, int*);
 	MyDate parser(char*);
-	void dispose();
 	MyDate* copy();
-	int	equal(const MyDate& t) const;
-	int	cmp(const MyDate& t) const;
-	int	input(std::istream& cin = std::cin);
-	void output(std::ostream& cout = std::cout) const;
 	MyString toMyString() const;
-	int equal(const OBJ& t) const;
-	int cmp(const OBJ& t) const;
-	// Перегрузка операторов
-	MyDate& operator = (const MyDate str);
+	void dispose();
+	MyDate& operator = (const MyDate);
 	operator const char* ();
-	friend std::ostream& operator << (std::ostream&, const MyDate&);
-	friend std::istream& operator >> (std::istream&, MyDate&);
+	MyDate& operator += (long);
+	MyDate& operator ++ ();
+	MyDate operator ++ (int);
+	MyDate& operator -- ();
+	MyDate operator -- (int);
 	friend int operator == (const MyDate&, const MyDate&);
 	friend int operator != (const MyDate&, const MyDate&);
 	friend int operator <= (const MyDate&, const MyDate&);
 	friend int operator >= (const MyDate&, const MyDate&);
 	friend int operator < (const MyDate&, const MyDate&);
 	friend int operator > (const MyDate&, const MyDate&);
-	MyDate& operator += (long);
-	friend MyDate operator + (const MyDate&, long d);
+	friend MyDate operator + (const MyDate&, long);
 	friend long operator - (const MyDate&, const MyDate&);
-	MyDate& operator ++ ();
-	MyDate operator ++ (int);
-	MyDate& operator -- ();
-	MyDate operator -- (int);
 };

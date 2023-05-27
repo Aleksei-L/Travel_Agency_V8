@@ -6,15 +6,15 @@ Vector::Vector() {
 }
 
 // Конструктор с задаваемым размером вектора
-Vector::Vector(int sz) {
-	v = new T[size = sz];
+Vector::Vector(int s) {
+	v = new T[size = s];
 }
 
 // Конструктор копирования
-Vector::Vector(const Vector& l) {
-	v = new T[size = l.size];
+Vector::Vector(const Vector& t) {
+	v = new T[size = t.size];
 	for (int i = 0; i < size; i++)
-		v[i] = l.v[i];
+		v[i] = t.v[i];
 }
 
 // Деструктор вектора
@@ -38,12 +38,12 @@ int Vector::getSize() {
 }
 
 // Получение элемента из вектора
-T& Vector::item(int it) {
-	if (it < 0 || it > size) {
+T& Vector::item(int i) {
+	if (i < 0 || i > size) {
 		std::cout << "Index error" << std::endl;
 		exit(1);
 	}
-	return v[it];
+	return v[i];
 }
 
 // Изменение размера вектора
