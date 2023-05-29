@@ -16,27 +16,6 @@ Tour::Tour(const Tour& t) : name(t.name), country(t.country), count(t.count) {
 // Деструктор
 Tour::~Tour() {}
 
-// Определение класса
-MyString Tour::toMyString() const {
-	return MyString("Tour");
-}
-
-// Проверка на равенство
-int Tour::equal(const OBJ& t) const {
-	if (t.toMyString() == MyString("Tour"))
-		return equal((const Tour&)t);
-	std::cout << "Type error" << std::endl;
-	exit(1);
-}
-
-// Сравнение
-int Tour::cmp(const OBJ& t) const {
-	if (t.toMyString() == MyString("Tour"))
-		return cmp((const Tour&)t);
-	std::cout << "Type error" << std::endl;
-	exit(1);
-}
-
 // Ввод с клавиатуры
 int Tour::input(std::istream& cin) {
 	std::cout << "Enter tour name: ";
@@ -74,8 +53,8 @@ int Tour::input(std::ifstream& cin) {
 
 // Вывод в файл
 void Tour::output(std::ofstream& cout) const {
-	cout << name << std::endl;
-	cout << country << std::endl;
+	cout << name;
+	cout << country;
 	cout << count << std::endl;
 }
 
@@ -91,14 +70,35 @@ int Tour::cmp(const Tour& t) const {
 	return 0;
 }
 
+// Сравнение
+int Tour::cmp(const OBJ& t) const {
+	if (t.toMyString() == MyString("Tour"))
+		return cmp((const Tour&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
+}
+
 // Проверка на равенство
 int Tour::equal(const Tour& t) const {
 	return !name.cmp(t.name) && !country.cmp(t.country) && (count == t.count);
 }
 
+// Проверка на равенство
+int Tour::equal(const OBJ& t) const {
+	if (t.toMyString() == MyString("Tour"))
+		return equal((const Tour&)t);
+	std::cout << "Type error" << std::endl;
+	exit(1);
+}
+
 // Создание копии в динамической памяти
 Tour* Tour::copy() {
 	return new Tour(*this);
+}
+
+// Определение класса
+MyString Tour::toMyString() const {
+	return MyString("Tour");
 }
 
 // Освобождение памяти

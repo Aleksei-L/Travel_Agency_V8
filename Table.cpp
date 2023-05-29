@@ -16,39 +16,8 @@ Table::~Table() {
 	clear();
 }
 
-// Ввод таблицы
+// Ввод с клавиатуры
 int Table::input(std::istream& cin) {
-	int count = 0;
-	if (length() == getSize()) {
-		std::cout << "Size over, enter new size: ";
-		int newSize;
-		cin >> newSize;
-		//resize(newSize);
-	}
-	for (int i = length(); i < getSize(); i++) {
-		if (!((IO*)buf)->input(cin))
-			break;
-		insert(buf);
-	}
-	return count;
-}
-
-// Вывод таблицы
-void Table::output(std::ostream& cout) const {
-	bool flag = false;
-	int counter = 1;
-	for (T* i = begin(); i != end(); i++) {
-		cout << "Client #" << counter++ << std::endl;
-		((IO*)*i)->output(cout);
-		flag = true;
-		cout << std::endl;
-	}
-	if (!flag)
-		cout << "There is no to output!" << std::endl;
-}
-
-// Ввод из файла
-int Table::input(std::ifstream& cin) {
 	int count = 0;
 	if (length() == getSize()) {
 		std::cout << "Size over, enter new size: ";
@@ -60,22 +29,41 @@ int Table::input(std::ifstream& cin) {
 		if (!((IO*)buf)->input(cin))
 			break;
 		insert(buf);
+		std::cout << std::endl;
 	}
 	return count;
 }
 
-// Вывод в файл
-void Table::output(std::ofstream& cout) const {
+// Вывод на экран
+void Table::output(std::ostream& cout) const {
 	bool flag = false;
 	int counter = 1;
 	for (T* i = begin(); i != end(); i++) {
-		cout << "Client #" << counter++ << std::endl;
+		cout << "Element #" << counter++ << std::endl;
 		((IO*)*i)->output(cout);
 		flag = true;
 		cout << std::endl;
 	}
 	if (!flag)
 		cout << "There is no to output!" << std::endl;
+}
+
+// Ввод из файла
+int Table::input(std::ifstream& cin) {
+	int count = 0;
+	for (int i = length(); i < getSize(); i++) {
+		if (!((IO*)buf)->input(cin))
+			break;
+		insert(buf);
+	}
+	std::cout << std::endl;
+	return count;
+}
+
+// Вывод в файл
+void Table::output(std::ofstream& cout) const {
+	for (T* i = begin(); i != end(); i++)
+		((IO*)*i)->output(cout);
 }
 
 // Вставка нового элемента в таблицу
@@ -87,9 +75,9 @@ T* Table::insert(const T& newClient) {
 
 // Изменение размера таблицы на plusSize элементов
 void Table::resize(int plusSize) {
-	int temp = length();
-	resize(plusSize);
-	current = &item(getSize() - temp);
+	int temp = getSize();
+	Vector::resize(plusSize);
+	current = begin() + temp;
 }
 
 // Возвращает указатель на первый свободный элемент таблицы
@@ -122,7 +110,7 @@ void Table::clear() {
 void Table::sort() {
 	for (int i = 0; i < getSize(); i++) {
 		for (int j = i + 1; j < getSize(); j++) {
-			if (item(i) > item(j))
+			if (*(item(i)) > *(item(j)))
 				std::swap(item(i), item(j));
 		}
 	}
@@ -181,13 +169,12 @@ int Table::append(const char* filename) {
 	std::cin >> *this;
 	std::cin.clear();
 	save(filename);
-	std::cout << *this;
 	return 1;
 }
 
 // Сохранение в файл
 int Table::save(const char* filename) {
-	std::cout << "Save table to file " << filename << " 1 - YES; 0 - NO" << std::endl;
+	std::cout << "Save table to file " << filename << std::endl << "0 - NO" << std::endl << "1 - YES" << std::endl;
 	int n = 0;
 	std::cin >> n;
 	if (n) {

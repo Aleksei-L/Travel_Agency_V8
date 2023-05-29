@@ -2,35 +2,26 @@
 #include "Trip.h"
 
 int main() {
-	Trip l, l2;
-	Trip* buf = &l, * buf2 = &l2;
-	Table t(2, buf);
+	Client cl, cl2;
+	Client* bufCl = &cl, * bufCl2 = &cl2;
+	Table tCl(2, bufCl);
 
-	Client b, b2;
-	Client* bufb = &b, * bufb2 = &b2;
-	Table t1(2, bufb);
+	Tour to, to2;
+	Tour* bufTo = &to, * bufTo2 = &to2;
+	Table tTo(2, bufTo);
 
-	Tour r, r2;
-	Tour* bufr = &r, * bufr2 = &r2;
-	Table t2(2, bufr);
+	Trip tr, tr2;
+	Trip* bufTr = &tr, * bufTr2 = &tr2;
+	Table tTr(2, bufTr);
 
-	Table* p = &t;
-	IO* buf_1 = NULL, * buf_2 = NULL;
+	Table* p = &tCl;
+	IO* buf_1 = bufCl, * buf_2 = bufCl2;
 	char endline;
 	int ind, i, position, code, count;
 
-	/*
-	int size, code, ;
-	std::cout << "Enter Table's size: ";
-	std::cin >> size;
-	Client first, second;
-	Client* buf = &first;
-	Table myT(size, buf);*/
-
 	while (true) {
 		std::cout << "Select the program operation mode:" << std::endl;
-		//std::cout << "Now you work with " << p->item(0)->toMyString() << " table" << std::endl;
-		std::cout << "1) Input table" << std::endl;
+		std::cout << "1) Input all tables" << std::endl;
 		std::cout << "2) Output table" << std::endl;
 		std::cout << "3) Sort table" << std::endl;
 		std::cout << "4) Search client in table" << std::endl;
@@ -43,32 +34,42 @@ int main() {
 		std::cin >> code;
 		switch (code) {
 		case 1:
-			t1.append("Client.txt");
-			std::cout << t1;
-			t2.append("Tour.txt");
-			std::cout << t2;
-			for (count = 0; count < t.getSize(); count++) {
-				std::cout << "Enter index of element Client Table or -1 for input with keyboard CTRL Z for exit" << std::endl;
-				int ind_b;
-				std::cin >> ind_b;
+			std::cout << std::endl;
+			tCl.append("Client.txt");
+			std::cout << std::endl;
+			tTo.append("Tour.txt");
+			std::cout << std::endl;
+			for (count = 0; count < tTr.getSize(); count++) {
+				std::cout << "Enter index of Client table element or -1 for input with keyboard CTRL-Z for exit" << std::endl;
+				int ind_cl;
+				std::cin >> ind_cl;
 				if (std::cin.eof()) {
 					std::cin.clear();
 					break;
 				}
-				std::cout << "Enter index of element Client Tour or -1 for input with keyboard CTRL Z for exit" << std::endl;
-				int ind_r;
-				std::cin >> ind_r;
-				Client* pb = (Client*)((ind_b == -1) ? 0 : t1[ind_b]);
-				Tour* pr = (Tour*)((ind_r == -1) ? 0 : t2[ind_r]);
-				Trip l(pb->copy(), pr->copy(), "a", 1, 2, 1, 1, 1);
-				l.input();
-				t.insert(&l);
+				std::cout << "Enter index of Tour table element or -1 for input with keyboard CTRL-Z for exit" << std::endl;
+				int ind_to;
+				std::cin >> ind_to;
+				Client* pCl = (Client*)((ind_cl == -1) ? 0 : tCl[ind_cl]);
+				if (pCl == 0) {
+					pCl = bufCl;
+					bufCl->input();
+				}
+				Tour* pTo = (Tour*)((ind_to == -1) ? 0 : tTo[ind_to]);
+				if (pTo == 0) {
+					pTo = bufTo;
+					bufTo->input();
+				}
+				Trip pTr(pCl->copy(), pTo->copy(), "a", 1, 2, 1, 1, 1);
+				pTr.input();
+				tTr.insert(&pTr);
+				std::cout << std::endl;
 			}
-			t.save("Trip.txt");
+			tTr.save("Trip.txt");
+			std::cout << std::endl;
 			break;
 		case 2:
 			std::cout << std::endl;
-			std::cout << "Elements:" << std::endl;
 			std::cout << *p;
 			std::cout << std::endl;
 			break;
@@ -78,73 +79,73 @@ int main() {
 			std::cout << std::endl;
 			break;
 		case 4:
-			std::cout << "input element for find" << std::endl;
+			std::cout << std::endl;
+			std::cout << "Enter element for search" << std::endl;
 			buf_1->input();
 			i = p->search(buf_1);
 			if (i >= 0)
-				std::cout << "position=" << i << std::endl;
+				std::cout << std::endl << "Element position: " << i << std::endl;
 			else
-				std::cout << "no found" << std::endl;
+				std::cout << std::endl << "Not found" << std::endl;
+			std::cout << std::endl;
 			break;
 		case 5:
 			std::cout << std::endl;
 			std::cout << "Enter position for Erase:" << std::endl;
 			std::cin >> position;
 			std::cin.get(endline);
-			//myT.erase(myT.begin() + position - 1);
 			p->erase(p->begin() + position);
 			std::cout << std::endl;
 			break;
 		case 6:
 			std::cout << std::endl;
 			std::cout << "Enter element for Remove:" << std::endl;
-			//std::cin >> first;
 			buf_1->input();
 			i = p->remove(buf_1);
 			if (i == 0)
-				std::cout << "No fonud" << std::endl;
-			//myT.remove(&first);
+				std::cout << std::endl << "Not found" << std::endl;
 			std::cout << std::endl;
 			break;
 		case 7:
 			std::cout << std::endl;
 			std::cout << "Enter old element for Replace:" << std::endl;
-			//std::cin >> first;
 			buf_1->input();
 			std::cout << "Enter new element for Replace:" << std::endl;
-			//std::cin >> second;
 			buf_2->input();
 			i = p->replace(buf_1, buf_2);
-			//myT.replace(&first, &second);
 			if (i == 0)
-				std::cout << "No found" << std::endl;
+				std::cout << std::endl << "Not found" << std::endl;
 			std::cout << std::endl;
 			break;
 		case 8:
+			std::cout << std::endl;
 			std::cout << "1 - Client, 2 - Tour, 3 - Trip" << std::endl;
 			std::cin >> ind;
 			if (ind == 1) {
-				p = &t1;
-				buf_1 = bufb;
-				buf_2 = bufb2;
+				p = &tCl;
+				buf_1 = bufCl;
+				buf_2 = bufCl2;
 			}
 			else if (ind == 2) {
-				p = &t2;
-				buf_1 = bufr;
-				buf_2 = bufr2;
+				p = &tTo;
+				buf_1 = bufTo;
+				buf_2 = bufTo2;
 			}
 			else if (ind == 3) {
-				p = &t;
-				buf_1 = buf;
-				buf_2 = buf2;
+				p = &tTr;
+				buf_1 = bufTr;
+				buf_2 = bufTr2;
 			}
 			else
 				std::cout << "Error choise" << std::endl;
+			std::cout << std::endl;
 			break;
 		case 9:
-			t1.save("Client.txt");
-			t2.save("Tour.txt");
-			t.save("Trip.txt");
+			std::cout << std::endl;
+			tCl.save("Client.txt");
+			tTo.save("Tour.txt");
+			tTr.save("Trip.txt");
+			std::cout << std::endl;
 			break;
 		case 10:
 			return 0;

@@ -27,20 +27,6 @@ Trip::~Trip() {
 
 // Ввод с клавиатуры
 int Trip::input(std::istream& cin) {
-	std::cout << "Enter info about tour: ";
-	cin >> about;
-
-	bool b1 = cin.eof();
-	if (b1)
-		return 0;
-
-	std::cout << "Enter number of days: ";
-	cin >> days;
-	std::cout << "Enter price: ";
-	cin >> price;
-	std::cout << "Enter date: ";
-	cin >> date;
-
 	if (!client) {
 		client = new Client();
 		client->input(cin);
@@ -50,6 +36,15 @@ int Trip::input(std::istream& cin) {
 		tour = new Tour();
 		tour->input(cin);
 	}
+
+	std::cout << "Enter info about tour: ";
+	cin >> about;
+	std::cout << "Enter number of days: ";
+	cin >> days;
+	std::cout << "Enter price: ";
+	cin >> price;
+	std::cout << "Enter date: " << std::endl;
+	cin >> date;
 
 	return 1;
 }
@@ -79,27 +74,27 @@ int Trip::input(std::ifstream& cin) {
 void Trip::output(std::ofstream& cout) const {
 	client->output(cout);
 	tour->output(cout);
-	cout << about << std::endl;
+	cout << about;
 	cout << days << std::endl;
 	cout << price << std::endl;
-	cout << date << std::endl;
+	cout << date;
 }
 
 // Сравнение
 int Trip::cmp(const Trip& t) const {
 	int cond;
 
-	if (t.about.length() != 0 && (cond = about.cmp(t.about)))
+	if (t.about.length() != 0 && ((cond = about.cmp(t.about)) != 0))
 		return cond;
-	else if ((cond = (days == t.days)))
+	else if ((cond = days - t.days) != 0)
 		return cond;
-	else if ((cond = (price == t.price)))
+	else if ((cond = price - t.price) != 0)
 		return cond;
 	else if ((cond = date.cmp(t.date)))
 		return cond;
-	else if ((cond = client->cmp(*t.client)))
+	else if ((cond = client->cmp(*t.client)) != 0)
 		return cond;
-	return tour->cmp(*t.tour);
+	return tour->cmp(*t.tour) != 0;
 }
 
 // Сравнение

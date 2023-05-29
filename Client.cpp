@@ -66,11 +66,11 @@ int Client::input(std::ifstream& cin) {
 
 // Вывод в файл
 void Client::output(std::ofstream& cout) const {
-	cout << name << std::endl;
-	cout << city << std::endl;
+	cout << name;
+	cout << city;
 	cout << phone << std::endl;
 	cout << age << std::endl;
-	cout << birth << std::endl;
+	cout << birth;
 }
 
 // Сравнение
