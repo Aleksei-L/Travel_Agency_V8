@@ -4,15 +4,15 @@
 int main() {
 	Client cl, cl2;
 	Client* bufCl = &cl, * bufCl2 = &cl2;
-	Table tCl(2, bufCl);
+	Table tCl(3, bufCl);
 
 	Tour to, to2;
 	Tour* bufTo = &to, * bufTo2 = &to2;
-	Table tTo(2, bufTo);
+	Table tTo(3, bufTo);
 
 	Trip tr, tr2;
 	Trip* bufTr = &tr, * bufTr2 = &tr2;
-	Table tTr(2, bufTr);
+	Table tTr(3, bufTr);
 
 	Table* p = &tCl;
 	IO* buf_1 = bufCl, * buf_2 = bufCl2;

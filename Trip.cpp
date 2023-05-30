@@ -1,18 +1,18 @@
 #include "Trip.h"
 
-// Конструктор по умолчанию
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 Trip::Trip() : days(0), price(0) {
 	client = (Client*)0;
 	tour = (Tour*)0;
 }
 
-// Конструктор с заданными полями
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ Р·Р°РґР°РЅРЅС‹РјРё РїРѕР»СЏРјРё
 Trip::Trip(Client* c, Tour* t, const char* a, int ds, double p, int d, int m, int y) : about(a), days(ds), price(p), date(d, m, y) {
 	client = c->copy();
 	tour = t->copy();
 }
 
-// Конструктор копирования
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 Trip::Trip(const Trip& t) : about(t.about), days(t.days), price(t.price), date(t.date) {
 	if (t.client)
 		client = t.client->copy();
@@ -20,12 +20,12 @@ Trip::Trip(const Trip& t) : about(t.about), days(t.days), price(t.price), date(t
 		tour = t.tour->copy();
 }
 
-// Деструктор
+// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
 Trip::~Trip() {
 	dispose();
 }
 
-// Ввод с клавиатуры
+// Р’РІРѕРґ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹
 int Trip::input(std::istream& cin) {
 	if (!client) {
 		client = new Client();
@@ -49,7 +49,7 @@ int Trip::input(std::istream& cin) {
 	return 1;
 }
 
-// Вывод на экран
+// Р’С‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
 void Trip::output(std::ostream& cout) const {
 	client->output(cout);
 	tour->output(cout);
@@ -59,7 +59,7 @@ void Trip::output(std::ostream& cout) const {
 	cout << "Date: " << date << std::endl;
 }
 
-// Ввод из файла
+// Р’РІРѕРґ РёР· С„Р°Р№Р»Р°
 int Trip::input(std::ifstream& cin) {
 	client->input(cin);
 	tour->input(cin);
@@ -70,7 +70,7 @@ int Trip::input(std::ifstream& cin) {
 	return 1;
 }
 
-// Вывод в файл
+// Р’С‹РІРѕРґ РІ С„Р°Р№Р»
 void Trip::output(std::ofstream& cout) const {
 	client->output(cout);
 	tour->output(cout);
@@ -80,7 +80,7 @@ void Trip::output(std::ofstream& cout) const {
 	cout << date;
 }
 
-// Сравнение
+// РЎСЂР°РІРЅРµРЅРёРµ
 int Trip::cmp(const Trip& t) const {
 	int cond;
 
@@ -97,7 +97,7 @@ int Trip::cmp(const Trip& t) const {
 	return tour->cmp(*t.tour) != 0;
 }
 
-// Сравнение
+// РЎСЂР°РІРЅРµРЅРёРµ
 int Trip::cmp(const OBJ& t) const {
 	if (t.toMyString() == MyString("Trip"))
 		return cmp((const Trip&)t);
@@ -105,7 +105,7 @@ int Trip::cmp(const OBJ& t) const {
 	exit(1);
 }
 
-// Проверка на равенство
+// РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ
 int Trip::equal(const Trip& t) const {
 	int a = 1;
 	a = a && client->equal(*t.client);
@@ -117,7 +117,7 @@ int Trip::equal(const Trip& t) const {
 	return a;
 }
 
-// Проверка на равенство
+// РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ
 int Trip::equal(const OBJ& t) const {
 	if (t.toMyString() == MyString("Trip"))
 		return equal((const Trip&)t);
@@ -125,17 +125,17 @@ int Trip::equal(const OBJ& t) const {
 	exit(1);
 }
 
-// Создание копии в динамической памяти
+// РЎРѕР·РґР°РЅРёРµ РєРѕРїРёРё РІ РґРёРЅР°РјРёС‡РµСЃРєРѕР№ РїР°РјСЏС‚Рё
 Trip* Trip::copy() {
 	return new Trip(*this);
 }
 
-// Определение класса
+// РћРїСЂРµРґРµР»РµРЅРёРµ РєР»Р°СЃСЃР°
 MyString Trip::toMyString() const {
 	return MyString("Trip");
 }
 
-// Освобождение памяти
+// РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РїР°РјСЏС‚Рё
 void Trip::dispose() {
 	delete client;
 	delete tour;

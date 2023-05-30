@@ -1,24 +1,24 @@
 #include "IO.h"
 
-// Оператор вывода
+// РћРїРµСЂР°С‚РѕСЂ РІС‹РІРѕРґР°
 std::ostream& operator << (std::ostream& os, const IO& r) {
 	r.output(os);
 	return os;
 }
 
-// Оператор ввода
+// РћРїРµСЂР°С‚РѕСЂ РІРІРѕРґР°
 std::istream& operator >> (std::istream& is, IO& r) {
 	r.input(is);
 	return is;
 }
 
-// Оператор файлового вывода
+// РћРїРµСЂР°С‚РѕСЂ С„Р°Р№Р»РѕРІРѕРіРѕ РІС‹РІРѕРґР°
 std::ofstream& operator << (std::ofstream& os, const IO& r) {
 	r.output(os);
 	return os;
 }
 
-// Оператор файлового ввода
+// РћРїРµСЂР°С‚РѕСЂ С„Р°Р№Р»РѕРІРѕРіРѕ РІРІРѕРґР°
 std::ifstream& operator >> (std::ifstream& is, IO& r) {
 	r.input(is);
 	return is;

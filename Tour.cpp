@@ -1,22 +1,22 @@
 #include "Tour.h"
 
-// Конструктор по умолчанию
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 Tour::Tour() {
 	count = 0;
 }
 
-// Конструктор с заданными параметрами полей
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ Р·Р°РґР°РЅРЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё РїРѕР»РµР№
 Tour::Tour(const char* n, const char* cn, int co) : name(n), country(cn), count(co) {
 }
 
-// Конструктор копирования
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 Tour::Tour(const Tour& t) : name(t.name), country(t.country), count(t.count) {
 }
 
-// Деструктор
+// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
 Tour::~Tour() {}
 
-// Ввод с клавиатуры
+// Р’РІРѕРґ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹
 int Tour::input(std::istream& cin) {
 	std::cout << "Enter tour name: ";
 	cin >> name;
@@ -33,14 +33,14 @@ int Tour::input(std::istream& cin) {
 	return 1;
 }
 
-// Вывод на экран
+// Р’С‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
 void Tour::output(std::ostream& cout) const {
 	cout << "Tour name: " << name << std::endl;
 	cout << "Country name: " << country << std::endl;
 	cout << "City's count: " << count << std::endl;
 }
 
-// Ввод из файла
+// Р’РІРѕРґ РёР· С„Р°Р№Р»Р°
 int Tour::input(std::ifstream& cin) {
 	cin >> name;
 	bool b = cin.eof();
@@ -51,14 +51,14 @@ int Tour::input(std::ifstream& cin) {
 	return 1;
 }
 
-// Вывод в файл
+// Р’С‹РІРѕРґ РІ С„Р°Р№Р»
 void Tour::output(std::ofstream& cout) const {
 	cout << name;
 	cout << country;
 	cout << count << std::endl;
 }
 
-// Сравнение
+// РЎСЂР°РІРЅРµРЅРёРµ
 int Tour::cmp(const Tour& t) const {
 	int cond;
 	if ((cond = name.cmp(t.name)) != 0)
@@ -70,7 +70,7 @@ int Tour::cmp(const Tour& t) const {
 	return 0;
 }
 
-// Сравнение
+// РЎСЂР°РІРЅРµРЅРёРµ
 int Tour::cmp(const OBJ& t) const {
 	if (t.toMyString() == MyString("Tour"))
 		return cmp((const Tour&)t);
@@ -78,12 +78,12 @@ int Tour::cmp(const OBJ& t) const {
 	exit(1);
 }
 
-// Проверка на равенство
+// РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ
 int Tour::equal(const Tour& t) const {
 	return !name.cmp(t.name) && !country.cmp(t.country) && (count == t.count);
 }
 
-// Проверка на равенство
+// РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ
 int Tour::equal(const OBJ& t) const {
 	if (t.toMyString() == MyString("Tour"))
 		return equal((const Tour&)t);
@@ -91,15 +91,15 @@ int Tour::equal(const OBJ& t) const {
 	exit(1);
 }
 
-// Создание копии в динамической памяти
+// РЎРѕР·РґР°РЅРёРµ РєРѕРїРёРё РІ РґРёРЅР°РјРёС‡РµСЃРєРѕР№ РїР°РјСЏС‚Рё
 Tour* Tour::copy() {
 	return new Tour(*this);
 }
 
-// Определение класса
+// РћРїСЂРµРґРµР»РµРЅРёРµ РєР»Р°СЃСЃР°
 MyString Tour::toMyString() const {
 	return MyString("Tour");
 }
 
-// Освобождение памяти
+// РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РїР°РјСЏС‚Рё
 void Tour::dispose() {}

@@ -3,9 +3,9 @@
 
 class Tour : public IO {
 private:
-	MyString name; // Название тура
-	MyString country; // Страна в которую идёт тур
-	int count; // Кол-во посещаемых городов
+	MyString name; // РќР°Р·РІР°РЅРёРµ С‚СѓСЂР°
+	MyString country; // РЎС‚СЂР°РЅР° РІ РєРѕС‚РѕСЂСѓСЋ РёРґС‘С‚ С‚СѓСЂ
+	int count; // РљРѕР»-РІРѕ РїРѕСЃРµС‰Р°РµРјС‹С… РіРѕСЂРѕРґРѕРІ
 public:
 	Tour();
 	Tour(const char*, const char*, int);
