@@ -104,7 +104,7 @@ int Client::equal(const Client& t) const {
 
 // Проверка на равенство
 int Client::equal(const OBJ& t) const {
-	if (t.toMyString() == MyString("Book"))
+	if (t.toMyString() == MyString("Client"))
 		return equal((const Client&)t);
 	std::cout << "Type error" << std::endl;
 	exit(1);
